@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-top: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; /* Ensure items align to the top */
+            margin-bottom: 30px;
+        }
+
+        .content p {
+            width: 65%;
+        }
+
+        .content img {
+            width: 30%;
+            height: 250px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section .text-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section ul {
+            margin-left: 0;
+            padding-left: 20px;
+            width: 100%;
+        }
+        #sec img{
+            width:50%;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        .section-navbar {
+            background-color: #ffffff;  /* Dark background */
+            color :black;
+            padding: 10px 0;         /* Padding for some spacing */  /* Subtle shadow */
+            position: sticky;        /* Sticks the navbar on top during scroll */
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        /* Logo Styling */
+        .logo {
+            height: 100px;            /* Adjust logo height */
+            margin-right: 20px;      /* Space between logo and navigation */
+        }
+        
+        /* Header Content - Flexbox for Layout */
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation Menu */
+        nav ul {
+            list-style: none;        /* Remove bullet points */
+            display: flex;           /* Align items horizontally */
+            gap: 20px;               /* Add space between menu items */
+        }
+        
+        /* Links Styling */
+        nav ul li a {
+            text-decoration: none;   /* Remove underline */
+            color: #000000;             /* White text for contrast */
+            font-size: 16px;         /* Adjust text size */
+            padding: 10px 15px;      /* Add padding inside the link */
+            border-radius: 5px;      /* Rounded corners */
+            transition:linear colo /* Smooth hover effect */
+        }
+        
+        /* Hover Effect for Links */
+        nav ul li a:hover {
+            background-color: #555;  /* Darker background on hover */
+        }
+        
+        /* Active Link (optional styling) */
+        nav ul li a.active {
+            background-color: #04AA6D;  /* Green background for the active page */
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;  /* Stack logo and nav vertically */
+            }
+        
+            nav ul {
+                flex-direction: column;  /* Stack menu items vertically */
+                gap: 10px;               /* Adjust spacing between menu items */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="section-navbar">
+        <!-- <img src="images\Team Logo.png" alt="Team logo" class="logo"> -->
+        <div class="header-content">
+            <img src="images\Team Logo.png" alt="Team logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="utilities.html">Utilities</a></li>
+                    <li><a href="document1.html">Documentation</a></li>
+                    <li><a href="#">API</a></li>
+                    <li><a href="document.html">Tech Info</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+
+    <h1>Documentation</h1>
+
+    <section class="section">
+        <h3>Introduction</h3>
+        <div class="content">
+            <p>
+                Welcome to the Groundwater Level Prediction Tool, a cutting-edge platform designed to forecast groundwater levels for specific locations and future dates. This web-based tool harnesses advanced machine learning algorithms to analyze extensive historical groundwater data, providing accurate and actionable predictions. It is an invaluable resource for researchers, policymakers, and anyone interested in understanding and managing groundwater resources effectively.<br><br>
+                The tool employs sophisticated algorithms, including Random Forest, ARIMA, and XGBoost, to model and predict groundwater levels based on historical trends. Users can input parameters such as station location and prediction date to generate forecasts, which can be used for various purposes including water resource management, agricultural planning, and urban development.
+            </p>
+            <img src="images\Groundwater_(aquifer,_aquitard,_3_type_wells).png" alt="Groundwater Illustration">
+        </div>
+    </section>
+
+    <section class="section">
+        <h3>How It Works</h3>
+        <div class="text-content">
+            <p>
+                The prediction tool leverages Random Forest, ARIMA, and XGBoost models trained on historical groundwater data from various stations. The model takes input from users such as the station location and the desired prediction date, analyzes historical trends, and provides an estimated groundwater level.
+            </p>
+            <ul>
+                <li>Station-Based Prediction: Predicts groundwater levels based on historical data from specific stations.</li>
+                <li>Feature Engineering: Incorporates lagging and rolling features from historical data and month-based cyclic features.</li>
+                <li>Advanced Algorithms: Uses Random Forest as the primary prediction model, supported by time-series forecasting algorithms.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section">
+        <h3>Data Sources</h3>
+        <div class="content" id="sec">
+            <div class="text-content">
+                <p>
+                    Our data is sourced from government agencies such as the Central Ground Water Board, historical weather databases, and other public sources. The data used includes:
+                </p>
+                <ul>
+                    <li>Groundwater Levels: Historical measurements of water levels at specific stations.</li>
+                    <li>Rainfall Data: Historical rainfall data that may influence groundwater recharge.</li>
+                    <li>Station Information: Geographic and metadata about the measurement stations.</li>
+                </ul>
+            </div>
+            <img src="Screenshot 2024-09-09 121418.png" alt="Data Sources Illustration">
+        </div>
+    </section>
+
+    <section class="section">
+        <h3>Technical Details</h3>
+        <p>
+            The backend is built on machine learning models trained on a dataset spanning over 10 years of data from approximately 500 locations. Key technical components include:
+        </p>
+        <ul>
+            <li>Algorithms: Random Forest Regression, ARIMA, XGBoost.</li>
+            <li>Feature Engineering: Time-based cyclic features, lag features, and rolling window statistics.</li>
+            <li>Data Preprocessing: Robust scaling and handling of missing values using historical trends and averages.</li>
+            <li>Sample Weighting: Data quality categorized into "Good," "Average," and "Bad" for better predictions.</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h3>User Guide</h3>
+        <ul>
+            <li>Input Station and Date: Enter the station name and the future date for which you want to predict groundwater levels.</li>
+            <li>Submit for Prediction: Click the "Predict" button to submit your query.</li>
+            <li>View Results: The predicted groundwater level will be displayed in feet/meters.</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h3>Use Cases</h3>
+        <ul>
+            <li>Water Resource Management: Helps authorities predict groundwater availability for efficient water resource planning.</li>
+            <li>Agricultural Planning: Farmers can predict groundwater levels for irrigation planning.</li>
+            <li>Urban Planning: Town planners can forecast water supply conditions.</li>
+        </ul>
+    </section>
+
+    <footer>
+        &copy; 2024 Groundwater Prediction Tool - All rights reserved.
+    </footer>
+
+</body>
+</html>

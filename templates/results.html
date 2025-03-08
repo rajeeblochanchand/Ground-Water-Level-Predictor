@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Groundwater Level Prediction Results</h1>
+        <p><strong>Station Name:</strong> {{ station_name }}</p>
+        <p><strong>Start Date:</strong> {{ start_date }}</p>
+        <p><strong>End Date:</strong> {{ end_date }}</p>
+        
+        <h2>Prediction Summary</h2>
+        <p><strong>Max WSE:</strong> {{ max_wse }}</p>
+        <p><strong>Min WSE:</strong> {{ min_wse }}</p>
+        <p><strong>Mean WSE:</strong> {{ mean_wse }}</p>
+        
+        <h2>Prediction Plot</h2>
+        <img src="data:image/png;base64,{{ plot_url }}" alt="Predicted Groundwater Level Plot">
+        
+        <h2>Prediction Data</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Predicted WSE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, prediction in zip(dates, predictions) %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ prediction }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

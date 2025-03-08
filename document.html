@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-top: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .content p {
+            width: 65%;
+        }
+
+        .content img {
+            width: 30%;
+            height: 250px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section .text-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section ul {
+            margin-left: 0;
+            padding-left: 20px;
+            width: 100%;
+        }
+        #sec img{
+            width:50%;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        /* Navbar Container */
+.section-navbar {
+    background-color: #ffffff;  /* Dark background */
+    color :black;
+    padding: 10px 0;         /* Padding for some spacing */  /* Subtle shadow */
+    position: sticky;        /* Sticks the navbar on top during scroll */
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Logo Styling */
+.logo {
+    height: 100px;            /* Adjust logo height */
+    margin-right: 20px;      /* Space between logo and navigation */
+}
+
+/* Header Content - Flexbox for Layout */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigation Menu */
+nav ul {
+    list-style: none;        /* Remove bullet points */
+    display: flex;           /* Align items horizontally */
+    gap: 20px;               /* Add space between menu items */
+}
+
+/* Links Styling */
+nav ul li a {
+    text-decoration: none;   /* Remove underline */
+    color: #000000;             /* White text for contrast */
+    font-size: 16px;         /* Adjust text size */
+    padding: 10px 15px;      /* Add padding inside the link */
+    border-radius: 5px;      /* Rounded corners */
+    transition:linear colo /* Smooth hover effect */
+}
+
+/* Hover Effect for Links */
+nav ul li a:hover {
+    background-color: #555;  /* Darker background on hover */
+}
+
+/* Active Link (optional styling) */
+nav ul li a.active {
+    background-color: #04AA6D;  /* Green background for the active page */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;  /* Stack logo and nav vertically */
+    }
+
+    nav ul {
+        flex-direction: column;  /* Stack menu items vertically */
+        gap: 10px;               /* Adjust spacing between menu items */
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="section-navbar">
+        <!-- <img src="images\Team Logo.png" alt="Team logo" class="logo"> -->
+        <!-- <img src="images\Team Logo.png" alt="Team logo" class="logo"> -->
+        <div class="header-content">
+            <img src="images\Team Logo.png" alt="Team logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="utilities.html">Utilities</a></li>
+                    <li><a href="document1.html">Documentation</a></li>
+                    <li><a href="#">API</a></li>
+                    <li><a href="document.html">Tech Info</a></li>
+                </ul>
+            </nav>
+        </div>
+        </header>
+
+    <h1>Tech Info</h1>
+
+    <section class="section">
+        <h3>DATASET OVERVIEW</h3>
+        <p>Our model is built using a rich dataset that consists of historical groundwater measurements collected over the past decade from approximately 500 locations. The dataset includes:<br><br></p> 
+        <div class="content">
+            <ul>
+                <li>Station Data: Latitude, longitude, station names, and encoded station IDs for consistent input.</li>
+                <li>Groundwater Surface Elevation (WSE): The key target variable representing water surface elevation, which is predicted.</li>
+                <li>Ground Surface Elevation (WLM_GSE): A related feature representing the elevation of the ground surface.</li>
+                <li>Time-Series Data: Date columns that allow us to identify seasonal trends and long-term patterns in groundwater levels.</li>
+                <li>Cyclic Features: Month encoded using sine and cosine transformations to capture seasonal variations in water levels.</li>
+                <li>Lagging and Rolling Features: Historical values and statistics (mean, median, and standard deviation) based on previous days’ readings<br> (e.g., 7-day and 30-day windows), which help in forecasting future trends.</li>
+            </ul>
+            <img src="images\DATA OVERVIEW.webp">
+        </div>
+    </section>
+
+    <section class="section">
+        <h3>MACHINE LEARNING ALGORITHM USED</h3>
+        <p>
+            To make accurate predictions, we use a combination of three powerful machine learning algorithms: Random Forest, XGBoost, and LSTM. Each of these models contributes uniquely to the prediction process. Random Forest Regression Algorithm: Random Forest is an ensemble learning method that constructs multiple decision trees and merges their results for better accuracy and stability. Why Random Forest?: This method is well-suited for predicting groundwater levels due to its ability to capture complex relationships in the data. It can handle a large number of features and their interactions while preventing overfitting through random sampling. Modeling Approach: We feed the pre-processed dataset with lagging and rolling features into the Random Forest algorithm. The model learns from historical patterns, trends, and fluctuations to predict future groundwater levels.
+        </p>
+        <div class="text-content">
+            <ul>
+                <li><h4>XGBoost (Extreme Gradient Boosting): </h4>
+                    <h4>Algorithm:</h4>: XGBoost is a highly efficient and powerful gradient boosting framework. It focuses on minimizing errors by iteratively improving the model's predictions.
+                    <h4>Why XGBoost:</h4>  XGBoost is ideal for making fast and highly accurate predictions on large datasets. It is particularly effective at identifying nonlinear patterns in the data, making it an excellent choice for groundwater level prediction.
+                    <h4>Modeling Approach:</h4> XGBoost helps to refine the model by focusing on error minimization. It complements Random Forest’s approach by identifying subtle patterns that may not be captured by decision trees. 
+                </li>
+                <li>
+                    <h4>LSTM (Long Short-Term Memory) Neural Networks : </h4>
+                    <h4>Algorithm:</h4> LSTM is a type of recurrent neural network (RNN) that excels in handling time-series data with long-term dependencies. LSTM can “remember” information over time, which is crucial when dealing with data that spans several years. 
+                    <h4>Why LSTM ?:</h4> Groundwater levels are influenced by long-term trends such as rainfall patterns, seasonal changes, and human activities. LSTM’s ability to remember and learn from long-term dependencies helps capture these trends and forecast water levels more accurately. 
+                    <h4>Modeling Approach:</h4> We use LSTM to model the temporal aspect of the data, accounting for month-wise variations and capturing the long-term effects of environmental factors on groundwater levels.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section">
+        <h3>MODEL INTEGRATION</h3>
+        <div class="content" id="sec">
+            <div class="text-content">
+                <p>Our approach integrates the strengths of Random Forest, XGBoost, and LSTM to deliver robust predictions: </p>
+                <ul>
+                    <li>Pre-Processing: The dataset is first encoded with features such as cyclic month indicators, lagging features, and rolling statistics. Missing values are handled using statistical imputation methods. </li>
+                    <li>Feature Engineering: Important features like Ground Surface Elevation (WLM_GSE), Water Surface Elevation (WSE), and rolling statistics are used to capture temporal trends. Cyclic features such as sine and cosine transformations of the month help the model capture seasonal variations. </li>
+                    <li>Prediction: Depending on the task, we select the best-performing algorithm or an ensemble approach to combine predictions from multiple models. For time-sensitive predictions, <br>LSTM is favored, while for spatial predictions, Random Forest and XGBoost are highly effective.</li>
+                </ul>
+            </div>
+            <img src="images\Groundwater-modeling_Page_18-1.webp">
+        </div>
+    </section>
+
+    <section class="section">
+        <h3>TECHNICAL DETAILS AND INFRASTRUCTURE</h3>
+        <ul>
+            <li>Data Storage and Access: The data is stored in a structured format using modern databases and accessed through APIs to ensure seamless and efficient data retrieval. </li>
+            <li>Feature Scaling: Data related to groundwater levels and surface elevations is scaled using robust scaling techniques to prevent outliers from distorting predictions. </li>
+            <li>Sample Weighting: We incorporate sample weighting based on the quality codes for the measurements, giving more importance to high-quality data.</li>
+            <li>Hyperparameter Tuning: The models are tuned using techniques such as grid search to optimize parameters like max_depth, min_samples_split, and learning rates, ensuring that the models generalize well on unseen data.</li>
+        </ul>
+    </section>
+
+    <footer>
+        &copy; 2024 Groundwater Prediction Tool - All rights reserved.
+    </footer>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization Page</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .sidebar {
+        flex: 1;
+        background-color: #f7f7f7;
+        color: #444;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .map-container {
+        flex: 2;
+        background-color: #eaeaea;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+        background-color: #cccccc;
+    }
+    /* Adjustments for Statistics Box */
+.statistics {
+    background-color: #ffffff;
+    color: #333;
+    padding: 15px; /* Reduced padding for a smaller box */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Ensure it fits within the container */
+    max-width: 600px; /* Set a maximum width to keep it from growing too large */
+    margin: 20px auto; /* Center the box and add margin around it */
+    box-sizing: border-box; /* Include padding and border in element’s total width and height */
+}
+
+/* Heading styles inside Statistics Box */
+.statistics h2 {
+    font-size: 18px; /* Slightly smaller heading */
+    margin-bottom: 10px;
+}
+
+/* Content inside Statistics Box */
+.statistics p {
+    font-size: 16px; /* Adjust font size if needed */
+    margin: 5px 0; /* Add margin to separate lines of text */
+}
+
+
+    .graphs {
+        flex: 2;
+        background-color: #ffffff;
+        color: #333;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .graphs h2, .graphs h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .graphs div {
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 8px;
+        width: 100%;
+        height: 400px; /* Ensure enough height for each chart */
+        overflow: hidden;
+    }
+
+    .sidebar h2, .graphs h2, .graphs h3 {
+        color: #333;
+    }
+
+    /* Sidebar form styles */
+.sidebar h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.sidebar form {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar label {
+    margin-top: 15px; /* Increased gap above each label */
+    margin-bottom: 10px; /* Increased gap below each label */
+    font-size: 16px;
+    color: #444;
+}
+
+.sidebar select, 
+.sidebar input[type="text"], 
+.sidebar input[type="date"], 
+.sidebar button[type="submit"] {
+    padding: 10px; /* Increased padding for better appearance */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Increased margin at the bottom of inputs and buttons */
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.sidebar select:hover, 
+.sidebar input[type="text"]:hover, 
+.sidebar input[type="date"]:hover, 
+.sidebar button[type="submit"]:hover {
+    border-color: #007bff;
+}
+
+.sidebar button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Time Range Inputs */
+.sidebar input[type="date"] {
+    width: 48%;
+    margin-right: 4%;
+}
+
+.sidebar input[type="date"]:last-child {
+    margin-right: 0;
+}
+
+/* Download button styles */
+#downloadBtn {
+    margin-top: 20px; /* Increased margin for better spacing */
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#downloadBtn:hover {
+    background-color: #218838;
+}
+
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+        .container {
+            flex-direction: column;
+        }
+
+        .sidebar {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .map-container, .graphs {
+            width: 100%;
+            height: 50vh;
+        }
+
+        .graphs div {
+            height: 300px;
+        }
+    }
+</style>
+<body>
+    <div class="container">
+        <!-- First Column: Search Options -->
+        <div class="sidebar">
+            <h2>Input Parameter</h2>
+            <form id="searchForm">
+                <label for="stationNumber">Station Number</label>
+                <input type="text" id="stationNumber" name="stationNumber" placeholder="Enter station number" required>
+                
+                <label for="start_date">Start Date:</label>
+                <input type="text" id="start_date" name="start_date" placeholder="YYYY-MM-DD" required>
+                <h6>To get prediction for one day only Enter only start Date </h6>
+
+                <label for="end_date">End Date (optional):</label>
+                <input type="text" id="end_date" name="end_date" placeholder="YYYY-MM-DD">
+                
+                <button type="submit">Submit</button>
+            </form>
+            <button id="downloadBtn">Data / Report Download</button>
+        </div>
+
+        <div class="map-container">
+            <iframe 
+                width="100%" 
+                height="400" 
+                src="https://data.cnra.ca.gov/dataset/continuous-groundwater-level-measurements/resource/03967113-1556-4100-af2c-b16a4d41b9d0/view/781b9a9e-a579-4416-8438-43896367c581" 
+                frameBorder="0">
+            </iframe>
+        </div>
+
+        <!-- Third Column: Graphs -->
+        <div class="graphs">
+            <h2>Prediction Chart</h2>
+            <div id="predictionChart"></div>
+            <h2>Statistics</h2>
+           
+            <div id="statistics">
+                <!-- Placeholder for statistics -->
+                <p id="statsResult"></p>
+            </div>
+             
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+        
+            const stationName = document.getElementById('stationNumber').value;
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value || startDate;
+        
+            fetch('http://127.0.0.1:5000/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    station_name: stationName,
+                    start_date: startDate,
+                    end_date: endDate
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('statistics').innerHTML = '<p>Error: ' + data.error + '</p>';
+                } else {
+                    document.getElementById('statistics').innerHTML = `
+                        <p>Max Groundwater Level: ${data.max_wse}</p>
+                        <p>Min Groundwater Level: ${data.min_wse}</p>
+                        <p>Mean Groundwater Level: ${data.mean_wse}</p>
+                        <p>(For one day Prediction The Ground Water Level Is Same As Mean Groundwater Level)</p>
+                    `;
+                    updateChart(data.dates, data.predictions);
+                }
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                document.getElementById('statistics').innerHTML = '<p>Error: ' + error.message + '</p>';
+            });
+        });
+
+        function updateChart(dates, predictions) {
+            Highcharts.chart('predictionChart', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'predictied groundwater level'
+                },
+                xAxis: {
+                    categories: dates,
+                    title: {
+                        text: 'Date'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Groundwater Level (WSE)'
+                    }
+                },
+                series: [{
+                    name: 'predictied groundwater level',
+                    data: predictions
+                }]
+            });
+        }
+    </script>
+</body>
+</html>

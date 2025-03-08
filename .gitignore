@@ -1,0 +1,38 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environment
+venv/
+env/
+*.venv
+
+# Ignore environment variables and sensitive files
+.env
+*.env
+config.py
+
+# Ignore database files (if any)
+*.sqlite3
+*.db
+
+# Ignore logs and debug files
+logs/
+*.log
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/editor settings
+.vscode/
+.idea/
+*.swp
+
+# Ignore dependencies (if you're using a local package manager)
+node_modules/
+# Ignore all CSV files except required ones
+*.csv
+!station_and_gse.csv
+!data_ready_to_train.csv

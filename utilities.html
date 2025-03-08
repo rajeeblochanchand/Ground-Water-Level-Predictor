@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilities - NeerPath</title>
+    <link rel="stylesheet" href="styless.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Utilities</h1>
+
+        <div class="utilities-wrapper">
+            <!-- Water Resource Management Tips Section -->
+            <section class="tips-section">
+                <h2>NeerPath Utilities</h2>
+                <select id="problemSelect" onchange="showSolution(); showUtility()">
+                    <option value="">Select a utility...</option>
+                    <option value="Irrigation Efficiency">Irrigation Efficiency</option>
+                    <option value="Rainwater Harvesting">Rain Water Harvesting</option>
+                    <option value="Comparative GWL Analysis">Comparative GWL Analysis</option>
+                    <option value="Urban Planning Support">Urban Planning Support</option>
+                    <option value="Soil & Land Stability">Soil & Land Stability</option>
+                    <option value="Drinking Water Availability">Drinking Water Availability</option>
+                    <option value="Soil Moisture Monitoring">Soil Moisture Monitoring</option>
+                    <option value="Proper Well Maintenance">Proper Well Maintenance</option>
+                </select>
+                <div id="solutionContainer" style="display: none;">
+                    <h3>Solution</h3>
+                    <p id="solutionText"></p>
+                </div>
+            </section>
+
+            <!-- Agricultural Advisory Section (Moved outside the tips-section) -->
+            <section id="irrigationSection" class="calculator-section" style="display:none;">
+                <h2>Irrigation Efficiency Calculator</h2>
+                <form id="irrigationForm">
+                    <label for="landArea">Land Area (in square feet):</label>
+                    <input type="number" id="landArea" name="landArea" placeholder="Enter land area" required>
+
+                    <label for="groundwaterLevelIrrigation">Current Groundwater Level (in feet):</label>
+                    <input type="number" id="groundwaterLevelIrrigation" name="groundwaterLevelIrrigation" placeholder="Enter groundwater level" required>
+
+                    <button type="button" onclick="calculateAdvisory()">Get Advice</button>
+                </form>
+                <div id="advisoryResult"></div>
+            </section>
+
+            <!-- Urban Planning Support Section -->
+            <section id="urbanPlanningSection" class="calculator-section" style="display:none;">
+                <h2>Urban Planning Support</h2>
+                <form id="urbanPlanningForm">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" placeholder="Enter location" required>
+
+                    <label for="developmentType">Development Type:</label>
+                    <select id="developmentType">
+                        <option value="Residential">Residential</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Industrial">Industrial</option>
+                    </select>
+
+                    <label for="groundwaterLevelUrban">Current Groundwater Level (in feet):</label>
+                    <input type="number" id="groundwaterLevelUrban" name="groundwaterLevelUrban" placeholder="Enter groundwater level" required>
+
+                    <button type="button" onclick="calculateUrbanPlanningSupport()">Get Planning Support</button>
+                </form>
+                <div id="urbanPlanningResult"></div>
+            </section>
+            <!-- Rainwater Harvesting Section -->
+            <section id="rainwaterHarvestingSection" class="calculator-section" style="display:none;">
+                <h2>Rainwater Harvesting Calculator</h2>
+                <form id="rainwaterHarvestingForm">
+                    <label for="roofArea">Roof Area (in square feet):</label>
+                    <input type="number" id="roofArea" name="roofArea" placeholder="Enter roof area" required>
+            
+                    <label for="rainfall">Average Rainfall (in inches):</label>
+                    <input type="number" id="rainfall" name="rainfall" placeholder="Enter average rainfall" required>
+            
+                    <label for="currentWaterLevel">Current Water Level (in liters):</label>
+                    <input type="number" id="currentWaterLevel" name="currentWaterLevel" placeholder="Enter current water level" required>
+            
+                    <label for="storageCapacity">Storage Capacity (in liters):</label>
+                    <input type="number" id="storageCapacity" name="storageCapacity" placeholder="Enter storage capacity" required>
+            
+                    <button type="button" onclick="calculateRainwaterHarvesting()">Calculate Rainwater Harvesting Potential</button>
+                </form>
+                <div id="rainwaterHarvestingResult"></div>
+            </section>
+            
+            <!-- Comparative GWL Analysis Section -->
+            <section id="gwlAnalysisSection" class="calculator-section" style="display:none;">
+                <h2>Comparative Groundwater Level Analysis</h2>
+                <form id="gwlAnalysisForm">
+                    <label for="currentGWL">Current Groundwater Level in station 1(in feet):</label>
+                    <input type="number" id="currentGWL" name="currentGWL" placeholder="Enter current GWL" required>
+
+                    <label for="historicalGWL">Current Groundwater Level in station 2(in feet):</label>
+                    <input type="number" id="historicalGWL" name="historicalGWL" placeholder="Enter historical GWL" required>
+
+                    <button type="button" onclick="calculateGWLAnalysis()">Comparative GWL Trends</button>
+                </form>
+                <div id="gwlAnalysisResult"></div>
+            </section>
+            <!-- Soil & Land Stability Section -->
+        <section id="soilLandStabilitySection" class="calculator-section" style="display:none;">
+            <h2>Soil & Land Stability Assessment</h2>
+            <form id="soilLandStabilityForm">
+                <label for="currentGWLSoil">Current Groundwater Level (in feet):</label>
+                <input type="number" id="currentGWLSoil" name="currentGWLSoil" placeholder="Enter current GWL" required>
+
+                <label for="soilType">Soil Type:</label>
+                <select id="soilType">
+                    <option value="Sandy">Sandy</option>
+                    <option value="Clay">Clay</option>
+                    <option value="Loamy">Loamy</option>
+                    <option value="Silty">Silty</option>
+                </select>
+
+                <label for="slopeAngle">Slope Angle (in degrees):</label>
+                <input type="number" id="slopeAngle" name="slopeAngle" placeholder="Enter slope angle" required>
+
+                <button type="button" onclick="calculateSoilLandStability()">Assess Stability</button>
+            </form>
+            <div id="soilLandStabilityResult"></div>
+        </section>
+        <!-- Drinking Water Availability Section -->
+            <section id="drinkingWaterAvailabilitySection" class="calculator-section" style="display:none;">
+                <h2>Drinking Water Availability Assessment</h2>
+                <form id="drinkingWaterForm">
+                    <label for="currentGWLDrinking">Current Groundwater Level (in feet):</label>
+                    <input type="number" id="currentGWLDrinking" name="currentGWLDrinking" placeholder="Enter current GWL" required>
+
+                    <label for="waterDemand">Daily Water Demand (in liters):</label>
+                    <input type="number" id="waterDemand" name="waterDemand" placeholder="Enter daily water demand" required>
+
+                    <label for="populationServed">Population Served:</label>
+                    <input type="number" id="populationServed" name="populationServed" placeholder="Enter population served" required>
+
+                    <button type="button" onclick="calculateDrinkingWaterAvailability()">Assess Availability</button>
+                </form>
+                <div id="drinkingWaterAvailabilityResult"></div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="scriptt.js"></script>
+</body>
+</html>
