@@ -1,3 +1,0 @@
-models/groundwater_rf_model.pkl filter=lfs diff=lfs merge=lfs -text
-data_ready_to_train.csv filter=lfs diff=lfs merge=lfs -text
-models/label_encoder.pkl filter=lfs diff=lfs merge=lfs -text
