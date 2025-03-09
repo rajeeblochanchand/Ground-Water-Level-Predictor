@@ -11,27 +11,36 @@ app = Flask(__name__)
 # Google Drive file IDs
 CSV_FILE_ID = "1pBP-skEHyQHwmvIISGCykgAsL_rmmsE9"  # Replace with your actual CSV file ID
 PKL_FILE_ID = "1fNCa273lMREeM7rfDYQDZurzcMqKR3Qp"  # Replace with your actual .pkl file ID
+LABEL_ENCODER_FILE_ID = "1qivR2qNECmQnCJG6qUPTtPEgGfdiaxQp"  # Replace with your actual label encoder file ID
 
 # File paths where the files will be saved locally
-CSV_PATH = "C:\\Users\\hp\\OneDrive\\Documents\\Desktop\\al ml\\website\\data_ready_to_train.csv"
-PKL_PATH = "C:\\Users\\hp\\OneDrive\\Documents\\Desktop\\al ml\\website\\models\\groundwater_rf_model.pkl"
-LABEL_ENCODER_PATH = "C:\\Users\\hp\\OneDrive\\Documents\\Desktop\\al ml\\website\\models\\label_encoder.pkl"
+CSV_PATH = "data_ready_to_train.csv"
+PKL_PATH = "models/groundwater_rf_model.pkl"
+LABEL_ENCODER_PATH = "models/label_encoder.pkl"
 
+# Ensure the 'models' directory exists
+os.makedirs("models", exist_ok=True)
 
 # Function to download files from Google Drive
 def download_files():
-    # Check if the files are already downloaded, if not, download them
-    if not os.path.exists(CSV_PATH):
-        print("Downloading CSV file...")
-        gdown.download(f"https://drive.google.com/uc?export=download&id=1pBP-skEHyQHwmvIISGCykgAsL_rmmsE9", CSV_PATH, quiet=False)
+    try:
+        # Download CSV file
+        if not os.path.exists(CSV_PATH):
+            print("Downloading CSV file...")
+            gdown.download(f"https://drive.google.com/uc?export=download&confirm=t&id={CSV_FILE_ID}", CSV_PATH, quiet=False)
 
-    if not os.path.exists(PKL_PATH):
-        print("Downloading Model file...")
-        gdown.download(f"https://drive.google.com/uc?export=download&id=1fNCa273lMREeM7rfDYQDZurzcMqKR3Qp", PKL_PATH, quiet=False)
+        # Download Model file
+        if not os.path.exists(PKL_PATH):
+            print("Downloading Model file...")
+            gdown.download(f"https://drive.google.com/uc?export=download&confirm=t&id={PKL_FILE_ID}", PKL_PATH, quiet=False)
 
-    if not os.path.exists(LABEL_ENCODER_PATH):
-        print("Downloading Label Encoder file...")
-        gdown.download(f"https://drive.google.com/uc?export=download&id=1qivR2qNECmQnCJG6qUPTtPEgGfdiaxQp", LABEL_ENCODER_PATH, quiet=False)
+        # Download Label Encoder file
+        if not os.path.exists(LABEL_ENCODER_PATH):
+            print("Downloading Label Encoder file...")
+            gdown.download(f"https://drive.google.com/uc?export=download&confirm=t&id={LABEL_ENCODER_FILE_ID}", LABEL_ENCODER_PATH, quiet=False)
+    except Exception as e:
+        print(f"Error downloading files: {e}")
+        raise
 
 # Call download function when the app starts
 download_files()
@@ -144,4 +153,5 @@ def home():
     return render_template('goto.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))  # Use PORT environment variable if available
+    app.run(host='0.0.0.0', port=port, debug=False)  # Set debug=False in production
