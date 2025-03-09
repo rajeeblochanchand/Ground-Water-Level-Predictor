@@ -51,9 +51,10 @@ download_files()
 rf_model = joblib.load(PKL_PATH)
 label_encoder = joblib.load(LABEL_ENCODER_PATH)
 
-# Load only necessary columns from the dataset
-station_gse_df = pd.read_csv(CSV_PATH, usecols=['STATION', 'WLM_GSE'])
-historical_data_df = pd.read_csv(CSV_PATH, usecols=['STATION', 'datetime', 'WSE'])
+# Load the dataset for historical data
+station_gse_df = pd.read_csv(CSV_PATH)
+historical_data_df = pd.read_csv(CSV_PATH)
+
 
 # Rest of your code remains unchanged...
 
