@@ -40,7 +40,9 @@ def download_files():
             gdown.download(f"https://drive.google.com/uc?export=download&confirm=t&id={LABEL_ENCODER_FILE_ID}", LABEL_ENCODER_PATH, quiet=False)
     except Exception as e:
         print(f"Error downloading files: {e}")
-        raise
+        # Fallback: Use local files if download fails
+        if not os.path.exists(CSV_PATH) or not os.path.exists(PKL_PATH) or not os.path.exists(LABEL_ENCODER_PATH):
+            raise RuntimeError("Failed to download required files. Please ensure the files are available locally.")
 
 # Call download function when the app starts
 download_files()
