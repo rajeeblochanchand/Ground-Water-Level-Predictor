@@ -1,18 +1,48 @@
-from flask import Flask, render_template, request, jsonify
+import os
+import gdown
 import joblib
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-# Load the trained Random Forest model and label encoder
-rf_model = joblib.load(r"models/groundwater_rf_model.pkl")
-label_encoder = joblib.load(r"models/label_encoder.pkl")
+# Google Drive file IDs
+CSV_FILE_ID = "1pBP-skEHyQHwmvIISGCykgAsL_rmmsE9"  # Replace with your actual CSV file ID
+PKL_FILE_ID = "1fNCa273lMREeM7rfDYQDZurzcMqKR3Qp"  # Replace with your actual .pkl file ID
 
-# Load the datasets
-station_gse_df = pd.read_csv(r"station_and_gse.csv")
-historical_data_df = pd.read_csv(r"C:\Users\hp\OneDrive\Documents\Desktop\al ml\website\data_ready_to_train.csv")
+# File paths where the files will be saved locally
+CSV_PATH = "C:\\Users\\hp\\OneDrive\\Documents\\Desktop\\al ml\\website\\data_ready_to_train.csv"
+PKL_PATH = "C:\\Users\\hp\\OneDrive\\Documents\\Desktop\\al ml\\website\\models\\groundwater_rf_model.pkl"
+LABEL_ENCODER_PATH = "C:\\Users\\hp\\OneDrive\\Documents\\Desktop\\al ml\\website\\models\\label_encoder.pkl"
+
+
+# Function to download files from Google Drive
+def download_files():
+    # Check if the files are already downloaded, if not, download them
+    if not os.path.exists(CSV_PATH):
+        print("Downloading CSV file...")
+        gdown.download(f"https://drive.google.com/uc?export=download&id=1pBP-skEHyQHwmvIISGCykgAsL_rmmsE9", CSV_PATH, quiet=False)
+
+    if not os.path.exists(PKL_PATH):
+        print("Downloading Model file...")
+        gdown.download(f"https://drive.google.com/uc?export=download&id=1fNCa273lMREeM7rfDYQDZurzcMqKR3Qp", PKL_PATH, quiet=False)
+
+    if not os.path.exists(LABEL_ENCODER_PATH):
+        print("Downloading Label Encoder file...")
+        gdown.download(f"https://drive.google.com/uc?export=download&id=1qivR2qNECmQnCJG6qUPTtPEgGfdiaxQp", LABEL_ENCODER_PATH, quiet=False)
+
+# Call download function when the app starts
+download_files()
+
+# Load the trained Random Forest model and label encoder
+rf_model = joblib.load(PKL_PATH)
+label_encoder = joblib.load(LABEL_ENCODER_PATH)
+
+# Load the dataset for historical data
+station_gse_df = pd.read_csv(CSV_PATH)
+historical_data_df = pd.read_csv(CSV_PATH)
 
 def prepare_input_features(station_name, input_date):
     encoded_station = label_encoder.transform([station_name])[0]
@@ -24,7 +54,7 @@ def prepare_input_features(station_name, input_date):
     month_sine = np.sin(2 * np.pi * month / 12)
     month_cosine = np.cos(2 * np.pi * month / 12)
     
-    # Filter data
+    # Filter data for the selected station
     station_data = historical_data_df[historical_data_df['STATION'] == station_name].copy()
     
     # Convert 'datetime' column to datetime format
@@ -41,7 +71,7 @@ def prepare_input_features(station_name, input_date):
     if station_data.empty:
         raise ValueError("No valid datetime entries in the filtered station data.")
 
-    # Filter similar months' data
+    # Filter data for similar months
     similar_months_data = station_data[(station_data['datetime'].dt.month >= 1) & (station_data['datetime'].dt.month <= month)]
     
     # Handle cases where similar_months_data may be empty

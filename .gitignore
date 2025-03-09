@@ -32,7 +32,6 @@ Thumbs.db
 
 # Ignore dependencies (if you're using a local package manager)
 node_modules/
-# Ignore all CSV files except required ones
+# Dataset and model files (optional, you might not want to push large files like CSVs and PKLs)
+*.pkl
 *.csv
-!station_and_gse.csv
-!data_ready_to_train.csv
